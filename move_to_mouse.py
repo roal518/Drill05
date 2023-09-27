@@ -51,8 +51,12 @@ def move_character():
         t = i / 100
         x = (1 - t) * nowX + t * mouseX
         y = (1 - t) * nowY + t * mouseY
-        IDLE_character.clip_draw(idleframe * 100, 0, 100, 100, x, y)
+        if(nowX<=mouseX):
+            MOVE_character.clip_draw(runframe * 100, 0, 100, 100, x, y)
+        elif(nowX>mouseX):
+            MOVE_character.clip_composite_draw(runframe * 100, 0, 100, 100, 0, 'h', x, y, 100, 100)
 
+runframe = 0
 idleframe = 0
 i = 0
 index = 0
@@ -62,14 +66,14 @@ while running:
     Arrow_cursur.draw(mouseX, mouseY)
     if(moving):
         move_character()
-        i += 1
+        i += 2
     else:
         IDLE_character.clip_draw(idleframe * 100, 0, 100, 100, x, y)
-
-    handle_events()
+        handle_events()
 
     keyboard_events()
     update_canvas()
+    runframe = (runframe + 1) % 6
     idleframe = (idleframe + 1) % 4
     delay(0.05)
 
