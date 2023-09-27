@@ -6,6 +6,7 @@ open_canvas(TUK_WIDTH,TUK_HEIGHT)
 tuk_ground = load_image('TUK_GROUND.png')
 IDLE_character = load_image('Woodcutter_idle.png')
 MOVE_character = load_image('Woodcutter_run.png')
+Arrow_cursur = load_image('hand_arrow')
 
 running = True
 moving = False
@@ -21,7 +22,7 @@ def handle_events():
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_ESCAPE:
                 running = False
-                
+
 runframe = 0
 idleframe = 0
 while running:
