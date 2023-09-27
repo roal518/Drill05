@@ -18,7 +18,10 @@ def handle_events():
     for event in events:
         if event.type == SDL_QUIT: # 창 닫기가 없긴 없다. ESC로 닫자
             running = False
-
+        elif event.type == SDL_KEYDOWN:
+            if event.key == SDLK_ESCAPE:
+                running = False
+                
 runframe = 0
 idleframe = 0
 while running:
