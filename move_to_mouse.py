@@ -1,6 +1,6 @@
 from pico2d import *
-
-TUK_WIDTH, TUK_HEIGHT = 1024, 1280
+import random
+TUK_WIDTH, TUK_HEIGHT = 1280,1024
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 tuk_ground = load_image('TUK_GROUND.png')
 IDLE_character = load_image('Woodcutter_idle.png')
@@ -24,27 +24,12 @@ def keyboard_events():
                 running = False
 
 
-def handle_events():
-    global mouseX, mouseY, isClicked
-    global nowX,nowY
-    global i
-    events = get_events()
-    for event in events:
-        if event.type == SDL_MOUSEBUTTONDOWN:
-            if event.button == 1:
-                isClicked = True
-                nowX, nowY = mouseX, mouseY
-                mouseX, mouseY = event.x, TUK_HEIGHT - 1 - event.y
-                move_character()
-                i = 0
-        elif event.type == SDL_MOUSEBUTTONUP:
-            if event.button == 1:
-                isClicked = False
 
 def move_character():
     global x, y, nowX, nowY, mouseX, mouseY, i
     global moving
     if(x == mouseX and y == mouseY):
+        nowX, nowY = mouseX, mouseY
         moving = False
     elif (x != mouseX and y != mouseY):
         moving = True
@@ -56,7 +41,12 @@ def move_character():
         elif(nowX>mouseX):
             MOVE_character.clip_composite_draw(runframe * 100, 0, 100, 100, 0, 'h', x, y, 100, 100)
 def random_move():
-    pass
+    global mouseX, mouseY
+    global moving
+    moving = True
+    mouseX = random.randint(0,1280)
+    mouseY = random.randint(120,904)
+
 runframe = 0
 idleframe = 0
 i = 0
@@ -69,8 +59,9 @@ while running:
         move_character()
         i += 2
     else:
+        i = 0
+        random_move()
         IDLE_character.clip_draw(idleframe * 100, 0, 100, 100, x, y)
-        handle_events()
     keyboard_events()
     update_canvas()
     runframe = (runframe + 1) % 6
