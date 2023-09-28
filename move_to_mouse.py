@@ -9,11 +9,10 @@ Arrow_cursur = load_image('hand_arrow.png')
 
 running = True
 moving = False
-mouseX = TUK_WIDTH//2
-mouseY = TUK_HEIGHT//2
-nowX, nowY = 0, 0
+mouseX = TUK_WIDTH // 2
+mouseY = TUK_HEIGHT // 2
+nowX, nowY = TUK_WIDTH // 2, TUK_HEIGHT // 2
 x, y = mouseX, mouseY
-isClicked = False
 # handle_events--> keyboard // mouse
 def keyboard_events():
     global running
@@ -22,9 +21,6 @@ def keyboard_events():
         if keyevent.type == SDL_KEYDOWN:
             if keyevent.key == SDLK_ESCAPE:
                 running = False
-
-
-
 def move_character():
     global x, y, nowX, nowY, mouseX, mouseY, i
     global moving
