@@ -1,6 +1,6 @@
 from pico2d import *
 
-TUK_WIDTH, TUK_HEIGHT = 1280, 1024
+TUK_WIDTH, TUK_HEIGHT = 1024, 1280
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 tuk_ground = load_image('TUK_GROUND.png')
 IDLE_character = load_image('Woodcutter_idle.png')
@@ -51,11 +51,12 @@ def move_character():
         t = i / 100
         x = (1 - t) * nowX + t * mouseX
         y = (1 - t) * nowY + t * mouseY
-        if(nowX<=mouseX):
+        if(nowX<mouseX):
             MOVE_character.clip_draw(runframe * 100, 0, 100, 100, x, y)
         elif(nowX>mouseX):
             MOVE_character.clip_composite_draw(runframe * 100, 0, 100, 100, 0, 'h', x, y, 100, 100)
-
+def random_move():
+    pass
 runframe = 0
 idleframe = 0
 i = 0
@@ -70,7 +71,6 @@ while running:
     else:
         IDLE_character.clip_draw(idleframe * 100, 0, 100, 100, x, y)
         handle_events()
-
     keyboard_events()
     update_canvas()
     runframe = (runframe + 1) % 6
