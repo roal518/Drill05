@@ -16,9 +16,10 @@ x, y = mouseX, mouseY
 # handle_events--> keyboard // mouse
 def keyboard_events():
     global running
-    keyevents = get_events()
     for keyevent in get_events():
-        if keyevent.type == SDL_KEYDOWN:
+        if keyevent.type == SDL_QUIT:
+            running = False
+        elif keyevent.type == SDL_KEYDOWN:
             if keyevent.key == SDLK_ESCAPE:
                 running = False
 def move_character():
