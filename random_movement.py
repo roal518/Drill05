@@ -1,18 +1,24 @@
 from pico2d import *
 import random
-TUK_WIDTH, TUK_HEIGHT = 1280,1024
-open_canvas(TUK_WIDTH, TUK_HEIGHT)
-tuk_ground = load_image('TUK_GROUND.png')
-IDLE_character = load_image('Woodcutter_idle.png')
-MOVE_character = load_image('Woodcutter_run.png')
-Arrow_cursur = load_image('hand_arrow.png')
 
-running = True
-moving = False
-mouseX = TUK_WIDTH // 2
-mouseY = TUK_HEIGHT // 2
-nowX, nowY = TUK_WIDTH // 2, TUK_HEIGHT // 2
-x, y = mouseX, mouseY
+def crete_resource():
+    global TUK_WIDTH, TUK_HEIGHT, tuk_ground, IDLE_character, MOVE_character, Arrow_cursur
+    TUK_WIDTH, TUK_HEIGHT = 1280, 1024
+    open_canvas(TUK_WIDTH, TUK_HEIGHT)
+    tuk_ground = load_image('TUK_GROUND.png')
+    IDLE_character = load_image('Woodcutter_idle.png')
+    MOVE_character = load_image('Woodcutter_run.png')
+    Arrow_cursur = load_image('hand_arrow.png')
+crete_resource()
+def create_variable():
+    global running, moving, mouseX, mouseY, nowX, nowY, x, y
+    running = True
+    moving = False
+    mouseX = TUK_WIDTH // 2
+    mouseY = TUK_HEIGHT // 2
+    nowX, nowY = TUK_WIDTH // 2, TUK_HEIGHT // 2
+    x, y = mouseX, mouseY
+create_variable()
 # handle_events--> keyboard // mouse
 def keyboard_events():
     global running
@@ -48,21 +54,27 @@ runframe = 0
 idleframe = 0
 i = 0
 index = 0
-while running:
+def update_world():
+    global runframe, idleframe
+    runframe = (runframe + 1) % 6
+    idleframe = (idleframe + 1) % 4
+    delay(0.05)
+def render_world():
+    global i
     clear_canvas()
-    tuk_ground.draw(TUK_WIDTH//2, TUK_HEIGHT//2)
+    tuk_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
     Arrow_cursur.draw(mouseX, mouseY)
-    if(moving):
+    if (moving):
         move_character()
         i += 2
     else:
         i = 0
         random_move()
         IDLE_character.clip_draw(idleframe * 100, 0, 100, 100, x, y)
-    keyboard_events()
     update_canvas()
-    runframe = (runframe + 1) % 6
-    idleframe = (idleframe + 1) % 4
-    delay(0.05)
+while running:
+    render_world()
+    keyboard_events()
+    update_world()
 
 close_canvas()
